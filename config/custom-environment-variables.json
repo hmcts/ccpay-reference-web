@@ -1,0 +1,33 @@
+{
+  "idam": {
+    "host": "IDAM_HOST",
+    "healthCheckUrl": "IDAM_HEALTH_CHECK_URL",
+    "jwt": {
+      "issuer": "IDAM_ISSUER",
+      "audience": "IDAM_AUDIENCE",
+      "secretKey": "IDAM_SECRET_KEY"
+    },
+    "secondsBeforeRefresh": "IDAM_SECONDS_BEFORE_TOKEN_REFRESH"
+  },
+  "session": {
+    "cookieName": "JWT_COOKIE_NAME"
+  },
+  "claim-store": {
+    "host": "CLAIM_STORE_HOST",
+    "healthCheckUrl": "CLAIM_STORE_HEALTH_CHECK_URL"
+  },
+  "payments": {
+    "host": "PAYMENTS_HOST",
+    "healthCheckUrl": "PAYMENTS_HEALTH_CHECK_URL",
+    "returnUrlHost": "PAYMENTS_RETURN_URL_HOST"
+  },
+  "fees": {
+    "host": "FEES_HOST",
+    "healthCheckUrl": "FEES_HEALTH_CHECK_URL",
+    "code": "FEES_CODE"
+  },
+  "postcodeInfo": {
+    "host": "POSTCODE_INFO_HOST",
+    "accessToken": "POSTCODE_INFO_ACCESS_TOKEN"
+  }
+}

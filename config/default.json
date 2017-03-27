@@ -1,0 +1,37 @@
+{
+  "idam": {
+    "host": "http://localhost:8084",
+    "healthCheckUrl": "http://localhost:8084/health",
+    "jwt": {
+      "issuer": "me",
+      "audience": "some-url",
+      "secretKey": "this will be replaced by an environment variable"
+    },
+    "secondsBeforeRefresh": 1800
+  },
+  "session": {
+    "cookieName": "SESSION_ID"
+  },
+  "appeal-store": {
+    "host": "http://localhost:8080"
+  },
+  "claim-store": {
+    "host": "http://localhost:4400",
+    "healthCheckUrl": "http://localhost:4401/health"
+  },
+  "payments": {
+    "host": "http://localhost:8181",
+    "returnUrlHost": "localhost:8443",
+    "healthCheckUrl": "http://localhost:8181/health"
+  },
+  "fees": {
+    "host": "http://localhost:8182",
+    "healthCheckUrl": "http://localhost:8182/health",
+    "code": "cmc-1"
+  },
+  "postcodeInfo": {
+    "host": "https://postcodeinfo.service.justice.gov.uk",
+    "healthCheckUrl": "https://postcodeinfo.service.justice.gov.uk",
+    "accessToken": "this will be replaced by an environment variable"
+  }
+}

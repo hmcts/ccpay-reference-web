@@ -1,0 +1,33 @@
+{% extends "layout.njk" %}
+
+{% set title = 'Appeal view' %}
+
+{% set heading %}
+  Appeal {{ appeal.id }} details
+{% endset %}
+
+{% block content %}
+
+  <p>
+    <a class="button" href="/appeals">Back to appeal list</a>
+  </p>
+
+  <table>
+    <tbody>
+      <tr>
+        <td><span class="bold">Status</span></td>
+        <td>{{ appeal.status }}</td>
+      </tr>
+      <tr>
+        <td><span class="bold">Type</span></td>
+        <td>{{ appeal.type }}</td>
+      </tr>
+      <tr>
+        <td><span class="bold">Description</span></td>
+        <td>{{ appeal.description }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "layout.njk" %}
+
+{% set title = 'Reference application' %}
+{% set heading = 'Welcome to Reference application' %}
+
+{% block content %}
+
+  {% if isLoggedIn %}
+    <a href="/appeals">{{ 'View my appeals' }}</a>
+  {% else %}
+    <a href="/login">{{ 'Sign in' }}</a>
+  {% endif %}
+
+{% endblock %}

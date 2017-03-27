@@ -1,0 +1,26 @@
+{% from "includes/macros/form.njk" import submitButton, textInput, radioGroup, errorSummary %}
+
+{% extends "layout.njk" %}
+
+{% set title = 'Start an appeal' %}
+{% set heading = 'Start an appeal' %}
+
+{% block content %}
+  {{ errorSummary(form) }}
+
+  <form method="post" autocomplete="off" novalidate="novalidate">
+    {{ textInput('Description', 'description', form ) }}
+    {{ radioGroup(
+        label = 'Please select a type of your appeal',
+        name = 'type',
+        options = [
+          { label: 'Some type', value: 'SOME_TYPE' },
+          { label: 'Some other type', value: 'SOME_OTHER_TYPE' }
+        ],
+        form = form
+      )
+    }}
+
+    {{ submitButton('Submit appeal') }}
+  </form>
+{% endblock %}

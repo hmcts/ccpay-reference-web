@@ -1,0 +1,37 @@
+{% extends "layout.njk" %}
+
+{% set title = 'My appeals' %}
+{% set heading = 'My appeals' %}
+
+{% block content %}
+
+<p>
+  <a href="/appeal/start" class="button">Start an appeal</a>
+</p>
+
+{% if appeals.length > 0 %}
+  <table>
+    <thead>
+      <th>ID</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th></th>
+    </thead>
+    <tbody>
+      {% for c in appeals %}
+        <tr>
+          <td>{{ c.id }}</td>
+          <td>{{ c.type }}</td>
+          <td>{{ c.description }}</td>
+          <td><a href="/appeals/{{ c.id }}">View</a></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% else %}
+  <p>
+    You have not create any appeals yet.
+  </p>
+{% endif %}
+
+{% endblock %}

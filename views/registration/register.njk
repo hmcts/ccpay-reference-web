@@ -1,0 +1,17 @@
+{% extends "../layout.njk" %}
+
+{% set title = 'Registration' %}
+{% set heading = 'Enter your details' %}
+
+{% from "includes/macros/form.njk" import emailInput, passwordInput, passwordConfirmInput, submitButton %}
+
+{% block content %}
+  <form method="post" autocomplete="off" novalidate="novalidate">
+    {{ emailInput('Email address') }}
+
+    {{ passwordInput('Create your password', true) }}
+    {{ passwordConfirmInput() }}
+
+    {{ submitButton('Continue') }}
+  </form>
+{% endblock %}

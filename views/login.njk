@@ -1,0 +1,17 @@
+{% extends "layout.njk" %}
+
+{% set title = 'Sign in' %}
+{% set heading = 'Sign in' %}
+
+{% from "includes/macros/form.njk" import emailInput, passwordInput, submitButton %}
+
+{% block content %}
+  <p>{{ 'Enter your credentials to sign in.' }}</p>
+
+  <form method="post" autocomplete="off" novalidate="novalidate">
+    {{ emailInput('Email address') }}
+    {{ passwordInput('Password') }}
+
+    {{ submitButton('Continue') }}
+  </form>
+{% endblock %}
