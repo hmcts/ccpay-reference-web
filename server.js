@@ -1,8 +1,13 @@
 #!/usr/bin/env node
-let app = require('./app')
+const app = require('./app');
+const fs = require('fs');
+const http = require('http');
+const https = require('https');
+const privateKey = fs.readFileSync('ssl/localhost.key', 'utf8');
+const certificate = fs.readFileSync('ssl/localhost.crt', 'utf8');
 
-app.set('port', process.env.PORT || 3000)
+const httpServer = http.createServer(app);
+httpServer.listen(process.env.HTTP_PORT || 3000);
 
-const server = app.listen(app.get('port'), () => {
-  console.log('Application started on port ' + server.address().port)
-})
+const httpsServer = https.createServer({key: privateKey, cert: certificate}, app);
+httpsServer.listen(process.env.HTTPS_PORT || 3443);

@@ -18,8 +18,8 @@ const routes = require('./routes/')
 let app = express()
 
 logging.config({
-  microservice: 'citizen-frontend',
-  team: 'cmc',
+  microservice: 'reference-web',
+  team: 'cc',
   environment: process.env.NODE_ENV
 })
 

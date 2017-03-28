@@ -1,4 +1,4 @@
-{% from "includes/macros/form.njk" import submitButton, textInput, radioGroup, errorSummary %}
+{% from "includes/macros/form.njk" import submitButton, textArea, radioGroup, errorSummary %}
 
 {% extends "layout.njk" %}
 
@@ -9,7 +9,7 @@
   {{ errorSummary(form) }}
 
   <form method="post" autocomplete="off" novalidate="novalidate">
-    {{ textInput('Description', 'description', form ) }}
+    {{ textArea('Description', 'description', form ) }}
     {{ radioGroup(
         label = 'Please select a type of your appeal',
         name = 'type',

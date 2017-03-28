@@ -2,6 +2,13 @@ const request = require('../../lib/request')
 const idamHost = require('config').get('idam.host')
 const validateUuid = require('uuid-validate')
 
+class TokenInvalidError extends Error {
+  constructor() {
+    super('Authorization token is not valid of has expired');
+    this.name = 'TokenInvalidError';
+  }
+}
+
 function login(emailAddress, password) {
   return request.post({
     uri: `${idamHost}/login`,
@@ -13,13 +20,20 @@ function login(emailAddress, password) {
 }
 
 function details(token) {
-  return request.get({
-    uri: `${idamHost}/details`,
-    headers: {
-      'Authorization': 'Bearer ' + token
-    },
-    resolveWithFullResponse: true
-  })
+  return request
+    .get({
+      uri: `${idamHost}/details`,
+      headers: {
+        'Authorization': 'Bearer ' + token
+      },
+      resolveWithFullResponse: true
+    })
+    .catch((err) => {
+      if (err.statusCode === 403) {
+        throw new TokenInvalidError();
+      }
+      throw err;
+    })
 }
 
 function registerUser(emailAddress, password) {

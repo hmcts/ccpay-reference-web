@@ -12,12 +12,25 @@
     <a class="button" href="/appeals">Back to appeal list</a>
   </p>
 
+{% if appeal.status == 'AWAITING_PAYMENT' %}
+  <div class="panel panel-border-wide">
+    <p>
+      WARNING. Your appeal will not be processed until you pay for it.
+      Please click <a href="{{ appeal.paymentUrl }}">here</a> to pay.
+    </p>
+  </div>
+{% endif %}
+
+{% if appeal.status == 'PAID' %}
+  <div class="panel panel-border-wide">
+    <p>
+      We have received your payment and are currently processing your appeal.
+    </p>
+  </div>
+{% endif %}
+
   <table>
     <tbody>
-      <tr>
-        <td><span class="bold">Status</span></td>
-        <td>{{ appeal.status }}</td>
-      </tr>
       <tr>
         <td><span class="bold">Type</span></td>
         <td>{{ appeal.type }}</td>
@@ -26,7 +39,6 @@
         <td><span class="bold">Description</span></td>
         <td>{{ appeal.description }}</td>
       </tr>
-    </tbody>
   </table>
 
 

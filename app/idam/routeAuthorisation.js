@@ -27,6 +27,14 @@ module.exports = function (req, res, next) {
         return next()
       })
       .catch((err) => {
+        if (err.name === 'TokenInvalidError') {
+          if (isUnprotected) { // don't redirect to login page if not a restricted page
+            res.clearCookie(sessionCookieName)
+            return next()
+          } else {
+            return res.redirect('/login')
+          }
+        }
         return next(err)
       })
   }
