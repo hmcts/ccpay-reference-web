@@ -3,16 +3,16 @@
 const request = require('../../lib/request')
 const appealStoreUrl = require('config').get('appeal-store.host')
 
-function bearer(token) {
+function bearer (token) {
   return 'Bearer ' + token
 }
 
-function userId(token) {
-  return '3';
+function userId (token) {
+  return '3'
 }
 
 class AppealStoreClient {
-  create(jwt, newAppeal) {
+  create (jwt, newAppeal) {
     return request.post({
       uri: `${appealStoreUrl}/users/${userId(jwt)}/appeals`,
       form: newAppeal,
@@ -22,7 +22,7 @@ class AppealStoreClient {
     })
   }
 
-  retrieve(jwt, id) {
+  retrieve (jwt, id) {
     return request.get({
       uri: `${appealStoreUrl}/users/${userId(jwt)}/appeals/${id}`,
       headers: {
@@ -31,7 +31,7 @@ class AppealStoreClient {
     })
   }
 
-  retrieveList(jwt) {
+  retrieveList (jwt) {
     return request.get({
       uri: `${appealStoreUrl}/users/${userId(jwt)}/appeals`,
       headers: {
@@ -41,4 +41,4 @@ class AppealStoreClient {
   }
 }
 
-module.exports = AppealStoreClient;
+module.exports = AppealStoreClient

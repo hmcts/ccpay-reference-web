@@ -3,20 +3,20 @@ const idamHost = require('config').get('idam.host')
 const validateUuid = require('uuid-validate')
 
 class TokenInvalidError extends Error {
-  constructor() {
-    super('Authorization token is not valid of has expired');
-    this.name = 'TokenInvalidError';
+  constructor () {
+    super('Authorization token is not valid of has expired')
+    this.name = 'TokenInvalidError'
   }
 }
 
 class CredentialsInvalidError extends Error {
-  constructor() {
-    super('Credentials are not valid');
-    this.name = 'CredentialsInvalidError';
+  constructor () {
+    super('Credentials are not valid')
+    this.name = 'CredentialsInvalidError'
   }
 }
 
-function login(emailAddress, password) {
+function login (emailAddress, password) {
   return request
     .post({
       uri: `${idamHost}/login`,
@@ -27,13 +27,13 @@ function login(emailAddress, password) {
     })
     .catch((err) => {
       if (err.statusCode === 401) {
-        throw new CredentialsInvalidError();
+        throw new CredentialsInvalidError()
       }
-      throw err;
+      throw err
     })
 }
 
-function details(token) {
+function details (token) {
   return request
     .get({
       uri: `${idamHost}/details`,
@@ -44,13 +44,13 @@ function details(token) {
     })
     .catch((err) => {
       if (err.statusCode === 403) {
-        throw new TokenInvalidError();
+        throw new TokenInvalidError()
       }
-      throw err;
+      throw err
     })
 }
 
-function registerUser(emailAddress, password) {
+function registerUser (emailAddress, password) {
   return request.post({
     uri: `${idamHost}/users`,
     body: {
@@ -61,11 +61,11 @@ function registerUser(emailAddress, password) {
   })
 }
 
-function sendActivationEmail(uuid) {
+function sendActivationEmail (uuid) {
   return request.get(`${idamHost}/users/${uuid}/activation`)
 }
 
-function activateAccount(uuid, activationKey) {
+function activateAccount (uuid, activationKey) {
   if (!(validateUuid(uuid) && validateUuid(activationKey))) {
     throw new Error('Invalid activation link')
   }
@@ -76,7 +76,7 @@ function activateAccount(uuid, activationKey) {
   })
 }
 
-function refreshToken(userId, jwt) {
+function refreshToken (userId, jwt) {
   return request.get({
     uri: `${idamHost}/users/${userId}/refresh-token`,
     headers: {

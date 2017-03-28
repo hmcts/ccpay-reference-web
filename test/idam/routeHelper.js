@@ -35,4 +35,3 @@ describe('Checking that path is unprotected', () => {
     done()
   })
 })
-
