@@ -9,14 +9,28 @@ class TokenInvalidError extends Error {
   }
 }
 
+class CredentialsInvalidError extends Error {
+  constructor() {
+    super('Credentials are not valid');
+    this.name = 'CredentialsInvalidError';
+  }
+}
+
 function login(emailAddress, password) {
-  return request.post({
-    uri: `${idamHost}/login`,
-    headers: {
-      'Authorization': 'Basic ' + new Buffer(`${emailAddress}:${password}`).toString('base64')
-    },
-    resolveWithFullResponse: true
-  })
+  return request
+    .post({
+      uri: `${idamHost}/login`,
+      headers: {
+        'Authorization': 'Basic ' + new Buffer(`${emailAddress}:${password}`).toString('base64')
+      },
+      resolveWithFullResponse: true
+    })
+    .catch((err) => {
+      if (err.statusCode === 401) {
+        throw new CredentialsInvalidError();
+      }
+      throw err;
+    })
 }
 
 function details(token) {

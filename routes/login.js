@@ -12,12 +12,18 @@ router.get(loginRoute, (req, res) => {
 });
 
 router.post(loginRoute, (req, res, next) => {
-  idamClient.login(req.body.email, req.body.password)
+  idamClient
+    .login(req.body.email, req.body.password)
     .then((idamRes) => {
       res.cookie(sessionCookie, idamRes.body['access-token']);
       res.redirect('/appeals');
     })
-    .catch(next)
+    .catch((err) => {
+      if (err.name === 'CredentialsInvalidError') {
+        return res.render('login')
+      }
+      return next(err);
+    });
 });
 
 router.get('/logout', (req, res, next) => {
