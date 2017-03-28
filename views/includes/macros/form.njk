@@ -23,7 +23,6 @@
   </div>
 {% endmacro %}
 
-
 {% macro passwordInput(label, showPasswordHintText) %}
   <div class="form-group">
     <label for="password" class="form-label-bold">{{ label | default('Password') }}</label>
@@ -45,20 +44,6 @@
   <div class="form-group">
     <input type="submit" class="button" value="{{ label | default('Continue') }}">
   </div>
-{% endmacro %}
-
-{% macro yesNoRadio(label, name, form) %}
-  {{ radioGroup(
-      label,
-      name,
-      [
-        { label: 'Yes', value: true},
-        { label: 'No', value: false}
-      ],
-      form,
-      isInline = true
-    )
-  }}
 {% endmacro %}
 
 {% macro radioOption(label, name, value, form) %}
@@ -85,29 +70,6 @@
         }}
       {% endfor %}
     </fieldset>
-  </div>
-{% endmacro %}
-
-{% macro addressInput(label, name, form) %}
-  {% set error = form.errorFor(name) %}
-  <div class="form-group {% if error %} error {% endif %}">
-    <span class="error-message">{{ error }}</span>
-    <label for="{{ name }}" class="form-label-bold">{{ label }}</label>
-    <div class="postcode-search visually-hidden" data-postcode-search-target="{{ name }}">
-      <span class="form-hint">Find an address using a UK postcode or enter it manually</span>
-      <div class="form-group">
-        <label for="{{ name }}-search" class="visually-hidden">Post code search</label>
-        <input id="{{ name }}-search" type="text" class="form-control form-control-1-4 postcode-search-input">
-        <a href="#" class="button-secondary postcode-search-button">Postcode search</a>
-      </div>
-      <div class="form-group">
-        <label for="{{ name }}-rslt" class="visually-hidden">Search results</label>
-        <select id="{{ name }}-rslt" class="form-control postcode-search-result">
-          <option value=""></option>
-        </select>
-      </div>
-    </div>
-    <textarea id="{{ name }}" name="{{ name }}" class="form-control" rows="7">{{ form.valueFor(name) }}</textarea>
   </div>
 {% endmacro %}
 

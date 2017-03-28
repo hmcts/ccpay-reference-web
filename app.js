@@ -2,14 +2,12 @@
 
 const express = require('express')
 const path = require('path')
-const favicon = require('serve-favicon')
 const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser')
 const nunjucks = require('nunjucks')
 const dateFilter = require('nunjucks-date-filter')
 const logging = require('nodejs-logging')
 
-const basicAuth = require('./lib/basicAuth')
 const AccessLogger = require('./lib/logging/accessLogger')
 const ErrorLogger = require('./lib/logging/errorLogger')
 
@@ -25,12 +23,6 @@ logging.config({
 
 let env = process.env.NODE_ENV || 'development'
 app.locals.ENV = env
-
-if (env !== 'development') {
-  const username = process.env.USERNAME
-  const password = process.env.PASSWORD
-  app.use(basicAuth(username, password))
-}
 
 app.set('view engine', 'njk')
 const nunjucksEnv = nunjucks.configure(path.join(__dirname, 'views'), {
@@ -50,7 +42,6 @@ nunjucksEnv.addGlobal('serviceName', 'Reference application')
 nunjucksEnv.addGlobal('development', env === 'development')
 nunjucksEnv.addFilter('date', dateFilter)
 
-app.use(favicon(path.join(__dirname, '/public/img/favicon.ico')))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({
   extended: true

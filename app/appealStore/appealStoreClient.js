@@ -1,7 +1,6 @@
 'use strict'
 
 const request = require('../../lib/request')
-const claimStoreUrl = require('config').get('claim-store.host')
 const appealStoreUrl = require('config').get('appeal-store.host')
 
 function bearer(token) {
@@ -38,40 +37,6 @@ class AppealStoreClient {
       headers: {
         'Authorization': bearer(jwt)
       }
-    })
-  }
-
-  getClaimantOptions(refNumber) {
-    return request.get({
-      uri: `${claimStoreUrl}/claims/${refNumber}/options/claimant`
-    })
-  }
-
-  getDefendantOptions(refNumber) {
-    return request.get({
-      uri: `${claimStoreUrl}/claims/${refNumber}/options/defendant`
-    })
-  }
-
-  assignDefendant(refNumber, params, jwt) {
-    return request.post({
-      uri: `${claimStoreUrl}/claims/${refNumber}/assign-defendant`,
-      body: params,
-      headers: {
-        'Authorization': bearer(jwt)
-      }
-    })
-  }
-
-  defend(refNumber) {
-    return request.post({
-      uri: `${claimStoreUrl}/claims/${refNumber}/defend`
-    })
-  }
-
-  requestDefaultJudgement(refNumber) {
-    return request.post({
-      uri: `${claimStoreUrl}/claims/${refNumber}/default-judgement`
     })
   }
 }
