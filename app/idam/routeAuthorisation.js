@@ -6,7 +6,7 @@ module.exports = function (req, res, next) {
   userDetailsHolder(req, res)
     .retrieve()
     .then(userDetails => {
-      res.locals.isLoggedIn = userDetails !== null
+      res.locals.isLoggedIn = !!userDetails
 
       if (userDetails || isUnprotectedPath(req.path)) {
         next()
