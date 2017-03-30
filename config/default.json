@@ -1,15 +1,11 @@
 {
   "idam": {
-    "host": "http://localhost:8088"
+    "host": "http://localhost:8084"
   },
   "session": {
     "cookieName": "SESSION_ID"
   },
   "appeal-store": {
     "host": "http://localhost:8080"
-  },
-  "fees": {
-    "host": "http://localhost:8182",
-    "code": "cmc-1"
   }
 }

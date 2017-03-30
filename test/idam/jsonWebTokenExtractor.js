@@ -4,13 +4,13 @@
 const expect = require('chai').expect
 const config = require('config')
 
-const JwtExtractor = require('../../lib/jsonWebTokenExtractor')
+const authTokenStore = require('../../lib/auth/authTokenStore')
 
 const jwtValue = 'a'
 
 const dummyCookie = () => {
   let cookies = {}
-  cookies[ config.get('session.cookieName') ] = jwtValue
+  cookies[config.get('session.cookieName')] = jwtValue
   return cookies
 }
 
@@ -20,15 +20,24 @@ describe('Extracting JWT', () => {
       cookies: dummyCookie()
     }
 
-    expect(JwtExtractor.extract(req)).to.equal(jwtValue)
-    done()
+    authTokenStore(req)
+      .retrieve()
+      .then(token => {
+        expect(token).to.equal(jwtValue)
+        done()
+      })
   })
 
   it('should return undefined if no cookie', (done) => {
     const req = {
       cookies: {}
     }
-    expect(JwtExtractor.extract(req)).to.equal(undefined)
-    done()
+
+    authTokenStore(req)
+      .retrieve()
+      .then(token => {
+        expect(token).to.equal(undefined)
+        done()
+      })
   })
 })

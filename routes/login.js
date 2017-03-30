@@ -1,24 +1,18 @@
 const express = require('express')
 const router = express.Router()
 const idamClient = require('../app/idam/idamClient')
-const config = require('config')
+const authTokenStore = require('../lib/auth/authTokenStore')
 
-const loginRoute = '/login'
-
-const sessionCookie = config.get('session.cookieName')
-
-router.get(loginRoute, (req, res) => {
+router.get('/login', (req, res) => {
   res.render('login')
 })
 
-router.post(loginRoute, (req, res, next) => {
+router.post('/login', (req, res, next) => {
   idamClient
     .login(req.body.email, req.body.password)
-    .then((idamRes) => {
-      res.cookie(sessionCookie, idamRes.body['access-token'])
-      res.redirect('/appeals')
-    })
-    .catch((err) => {
+    .then(token => authTokenStore(req, res).save(token))
+    .then(token => res.redirect('/appeals'))
+    .catch(err => {
       if (err.name === 'CredentialsInvalidError') {
         return res.render('login')
       }
@@ -26,9 +20,10 @@ router.post(loginRoute, (req, res, next) => {
     })
 })
 
-router.get('/logout', (req, res, next) => {
-  res.clearCookie(sessionCookie)
-  res.redirect('/')
+router.get('/logout', (req, res) => {
+  authTokenStore(req, res)
+    .clear()
+    .then(() => res.redirect('/'))
 })
 
 module.exports = router
