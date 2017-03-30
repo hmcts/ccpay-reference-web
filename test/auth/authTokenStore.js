@@ -39,7 +39,7 @@ describe('AuthTokenStore', () => {
       cookies: {},
 
       cookie: function (key, value) {
-        this.cookies[key] = value;
+        this.cookies[key] = value
       }
     }
 
