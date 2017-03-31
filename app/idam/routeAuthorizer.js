@@ -3,7 +3,7 @@ const isUnprotectedPath = require('./routeHelper').isUnprotectedPath
 const userDetailsHolder = require('../../lib/auth/userDetailsHolder')
 
 module.exports = function (req, res, next) {
-  userDetailsHolder(req, res)
+  return userDetailsHolder(req, res)
     .retrieve()
     .then(userDetails => {
       res.locals.isLoggedIn = true
