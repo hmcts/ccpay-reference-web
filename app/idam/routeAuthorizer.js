@@ -6,12 +6,8 @@ module.exports = function (req, res, next) {
   userDetailsHolder(req, res)
     .retrieve()
     .then(userDetails => {
-      res.locals.isLoggedIn = !!userDetails
-
-      if (userDetails || isUnprotectedPath(req.path)) {
-        next()
-      } else {
-        return res.redirect('/login')
-      }
+      res.locals.isLoggedIn = true
+      next()
     })
+    .catch(noUserDetails => isUnprotectedPath(req.path) ? next() : res.redirect('/login'))
 }

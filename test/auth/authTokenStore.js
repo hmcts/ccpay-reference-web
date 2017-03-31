@@ -20,7 +20,8 @@ describe('AuthTokenStore', () => {
     }
 
     authTokenStore(req).retrieve()
-      .should.eventually.equal('token')
+      .should.be.fulfilled
+      .eventually.equal('token')
       .notify(done)
   })
 
@@ -30,7 +31,7 @@ describe('AuthTokenStore', () => {
     }
 
     authTokenStore(req).retrieve()
-      .should.eventually.equal(undefined)
+      .should.be.rejected
       .notify(done)
   })
 

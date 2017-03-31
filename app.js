@@ -49,7 +49,7 @@ app.use(bodyParser.urlencoded({
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 
-app.all('/*', require('./app/idam/routeAuthorisation'))
+app.all('/*', require('./app/idam/routeAuthorizer'))
 app.use('/', routes)
 
 // Below will match all routes not covered by the router, which effectively translates to a 404 response
