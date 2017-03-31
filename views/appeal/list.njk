@@ -12,8 +12,9 @@
 {% if appeals.length > 0 %}
   <table>
     <thead>
-      <th>ID</th>
+      <th>Id</th>
       <th>Type</th>
+      <th>Status</th>
       <th>Description</th>
       <th></th>
     </thead>
@@ -22,6 +23,7 @@
         <tr>
           <td>{{ c.id }}</td>
           <td>{{ c.type }}</td>
+          <td>{{ c.status }}</td>
           <td>{{ c.description }}</td>
           <td><a href="/appeals/{{ c.id }}">View</a></td>
         </tr>

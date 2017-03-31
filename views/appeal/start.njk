@@ -14,8 +14,8 @@
         label = 'Please select a type of your appeal',
         name = 'type',
         options = [
-          { label: 'Some type', value: 'SOME_TYPE' },
-          { label: 'Some other type', value: 'SOME_OTHER_TYPE' }
+          { label: 'Happy path', value: 'HAPPY_PATH' },
+          { label: 'Payment redirection issue', value: 'WITH_UNCAUGHT_PAYMENT_REDIRECT' }
         ],
         form = form
       )
@@ -23,4 +23,21 @@
 
     {{ submitButton('Submit appeal') }}
   </form>
+
+  <details>
+
+    <summary><span class="summary">Explanation</span></summary>
+
+    <div class="panel panel-border-narrow">
+      <p>
+        <i>Payment redirection issue</i>. Showcases what would happen if internet connection is broken and user is not redirected
+        to the "return_url" after he/she clicks "Confirm" on the "GOV.UK Pay" website. In our case, payment status is not updated
+        until user revisits "view appeal" page. In a real-life scenario successful payment is very likely to trigger some business
+        rules and not having them triggered might be a big issue. It is recommended to implement background job that checks payment
+        status on a scheduled basis.
+      </p>
+    </div>
+
+  </details>
+
 {% endblock %}
