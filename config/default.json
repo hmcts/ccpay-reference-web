@@ -1,0 +1,11 @@
+{
+  "idam": {
+    "host": "http://localhost:8084"
+  },
+  "session": {
+    "cookieName": "SESSION_ID"
+  },
+  "appeal-store": {
+    "host": "http://localhost:8080"
+  }
+}

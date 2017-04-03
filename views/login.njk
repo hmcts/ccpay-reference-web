@@ -1,0 +1,44 @@
+{% extends "layout.njk" %}
+
+{% set title = 'Sign in' %}
+{% set heading = 'Sign in' %}
+
+{% from "includes/macros/form.njk" import emailInput, passwordInput, submitButton %}
+
+{% block content %}
+  <p>Enter your credentials to sign in.</p>
+
+  <form method="post" autocomplete="off" novalidate="novalidate">
+    {{ emailInput('Email address') }}
+    {{ passwordInput('Password') }}
+
+    {{ submitButton('Continue') }}
+  </form>
+
+  <details>
+    <summary><span class="summary">Test logins</span></summary>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Email address</th>
+          <th>Password</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>idam-test-user-citizen@binkmail.com</td>
+          <td>test</td>
+          <td>"Happy path" user with role "citizen"</td>
+        </tr>
+        <tr>
+          <td>idam-test-user-unknown@binkmail.com</td>
+          <td>test</td>
+          <td>Unauthorized user with role "unknown". It gets 403 whenever tries to access /appeals endpoint as backend allows only users with role "citizen"</td>
+        </tr>
+      </tbody>
+    </table>
+  </details>
+
+{% endblock %}
