@@ -1,0 +1,15 @@
+version: '2'
+
+services:
+  reference-web:
+    build:
+      context: .
+      args:
+        - http_proxy
+        - https_proxy
+        - no_proxy
+    image: docker.artifactory.reform.hmcts.net/common-components/reference-web
+    ports:
+     - 3443:3443
+    volumes:
+      - ./:/usr/src/app

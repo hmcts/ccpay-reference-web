@@ -1,0 +1,8 @@
+{
+  "idam": {
+    "host": "IDAM_HOST"
+  },
+  "appeal-store": {
+    "host": "APPEAL_STORE_HOST"
+  }
+}

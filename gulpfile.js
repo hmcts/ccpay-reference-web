@@ -9,7 +9,9 @@ let replace = require('gulp-replace')
 const repoRoot = path.join(__dirname, '/')
 const govUkFrontendToolkitRoot = path.join(repoRoot, 'node_modules/govuk_frontend_toolkit/stylesheets')
 const govUkElementRoot = path.join(repoRoot, 'node_modules/govuk-elements-sass/public/sass')
-const stylesheetsDirectory = './public/stylesheets'
+
+const assetsDirectory = './src/main/public'
+const stylesheetsDirectory = `${assetsDirectory}/stylesheets`
 
 gulp.task('sass', () => {
   gulp.src(stylesheetsDirectory + '/*.scss')
@@ -26,29 +28,44 @@ gulp.task('sass', () => {
 })
 
 gulp.task('copy-files', () => {
-  gulp.src([ './node_modules/jquery/dist/jquery.min.js', './node_modules/govuk_frontend_toolkit/javascripts/**/*.js',
-    './node_modules/govuk_template_jinja/assets/javascripts/**/*.js' ])
-    .pipe(gulp.dest('./public/js/lib/'))
+  gulp.src([
+    './node_modules/jquery/dist/jquery.min.js',
+    './node_modules/govuk_frontend_toolkit/javascripts/**/*.js',
+    './node_modules/govuk_template_jinja/assets/javascripts/**/*.js'
+  ])
+    .pipe(gulp.dest(`${assetsDirectory}/js/lib/`))
 
-  gulp.src(['./node_modules/HTML_CodeSniffer/HTMLCS.js'])
-    .pipe(gulp.dest('./public/js/lib/htmlcs'))
+  gulp.src([
+    './node_modules/HTML_CodeSniffer/HTMLCS.js'
+  ])
+    .pipe(gulp.dest(`${assetsDirectory}/js/lib/htmlcs`))
 
-  gulp.src(['./node_modules/HTML_CodeSniffer/Standards/**'])
-    .pipe(gulp.dest('./public/js/lib/htmlcs/Standards'))
+  gulp.src([
+    './node_modules/HTML_CodeSniffer/Standards/**'
+  ])
+    .pipe(gulp.dest(`${assetsDirectory}/js/lib/htmlcs/Standards`))
 
-  gulp.src(['./node_modules/HTML_CodeSniffer/Auditor/HTMLCSAuditor.js'])
-    .pipe(gulp.dest('./public/js/lib/htmlcs/Auditor'))
+  gulp.src([
+    './node_modules/HTML_CodeSniffer/Auditor/HTMLCSAuditor.js'
+  ])
+    .pipe(gulp.dest(`${assetsDirectory}/js/lib/htmlcs/Auditor`))
 
-  gulp.src(['./node_modules/HTML_CodeSniffer/Auditor/**/*.{css,gif,png}'])
-    .pipe(gulp.dest('./public/stylesheets/lib/'))
+  gulp.src([
+    './node_modules/HTML_CodeSniffer/Auditor/**/*.{css,gif,png}'
+  ])
+    .pipe(gulp.dest(`${assetsDirectory}/stylesheets/lib/`))
 
-  gulp.src([ './node_modules/govuk_frontend_toolkit/images/**/*',
-    './node_modules/govuk_template_jinja/assets/images/*.*' ])
-    .pipe(gulp.dest('./public/img/lib/'))
+  gulp.src([
+    './node_modules/govuk_frontend_toolkit/images/**/*',
+    './node_modules/govuk_template_jinja/assets/images/*.*'
+  ])
+    .pipe(gulp.dest(`${assetsDirectory}/img/lib/`))
 
-  gulp.src([ './node_modules/govuk_template_jinja/assets/stylesheets/**/*' ])
+  gulp.src([
+    './node_modules/govuk_template_jinja/assets/stylesheets/**/*'
+  ])
     .pipe(replace('images/', '/stylesheets/lib/images/', { skipBinary: true }))
-    .pipe(gulp.dest('./public/stylesheets/lib/'))
+    .pipe(gulp.dest(`${assetsDirectory}/stylesheets/lib/`))
 })
 
 gulp.task('watch', () => {
@@ -59,7 +76,7 @@ gulp.task('develop', () => {
   setTimeout(() => {
     livereload.listen()
     nodemon({
-      ext: 'js njk po',
+      ext: 'ts js njk po',
       stdout: true
     }).on('readable', () => {
       this.stdout.on('data', function (chunk) {

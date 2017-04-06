@@ -2,7 +2,7 @@
 /* global describe, it */
 
 const expect = require('chai').expect
-const Form = require('../../lib/forms/form')
+const Form = require('../../main/lib/forms/form')
 
 describe('Form', () => {
   describe('#asPath', () => {

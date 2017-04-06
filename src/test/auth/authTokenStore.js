@@ -1,6 +1,6 @@
 'use strict'
 /* global describe, it */
-const authTokenStore = require('../../lib/auth/authTokenStore')
+const authTokenStore = require('../../main/lib/auth/authTokenStore')
 const config = require('config')
 const chai = require('chai')
 const chaiAsPromised = require('chai-as-promised')

@@ -1,5 +1,7 @@
 #!groovy
 
+@Library('Reform') _
+
 properties(
   [[$class: 'GithubProjectProperty', projectUrlStr: 'http://git.reform/common-components/reference-web'],
    pipelineTriggers([[$class: 'GitHubPushTrigger']])]
@@ -25,6 +27,10 @@ node {
 
     stage('Test') {
       sh "yarn test"
+    }
+
+    stage('Package application (Docker)') {
+      dockerImage imageName: 'common-components/reference-web'
     }
   } catch (err) {
     slackSend(

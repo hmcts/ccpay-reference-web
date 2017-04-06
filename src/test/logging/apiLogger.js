@@ -3,7 +3,7 @@
 
 const expect = require('chai').expect
 
-const ApiLogger = require('../../lib/logging/apiLogger')
+const ApiLogger = require('../../main/lib/logging/apiLogger')
 
 describe('ApiLogger', () => {
   let apiLogger

@@ -7,7 +7,7 @@ const spies = require('chai-spies')
 
 chai.use(spies)
 
-const RequestPromiseLoggingHandler = require('../../lib/logging/requestPromiseLoggingHandler')
+const RequestPromiseLoggingHandler = require('../../main/lib/logging/requestPromiseLoggingHandler')
 
 describe('RequestPromiseLoggingHandler', () => {
   let handler, proxy

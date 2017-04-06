@@ -5,14 +5,14 @@
   "engines": {
     "node": ">=7.2.0"
   },
-  "main": "server.js",
+  "main": "src/main/server.js",
   "scripts": {
-    "start": "node ./server.js",
+    "start": "node src/main/server.js",
     "setup": "node_modules/.bin/gulp sass copy-files",
     "lint": "node_modules/.bin/standard",
-    "test": "mocha --invert --fgrep 'Accessibility' --recursive test",
+    "test": "mocha --invert --fgrep 'Accessibility' --recursive src/test",
     "test:coverage": "nyc npm test",
-    "test:unit": "mocha --recursive test/middleware test/models test/routes",
+    "test:unit": "mocha --recursive src/test/middleware src/test/models src/test/routes",
     "test:integration": "mocha --recursive test/integration"
   },
   "dependencies": {
@@ -73,7 +73,7 @@
       "GOVUK"
     ],
     "ignore": [
-      "public/js/lib"
+      "src/main/public/js/lib"
     ]
   }
 }

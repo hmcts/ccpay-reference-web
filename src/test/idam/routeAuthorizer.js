@@ -9,7 +9,7 @@ chai.use(chaiAsPromised)
 chai.use(chaiSpies)
 chai.should()
 
-mock('../../lib/auth/userDetailsHolder', (req, res) => {
+mock('../../main/lib/auth/userDetailsHolder', (req, res) => {
   return {
     retrieve: () => new Promise((resolve, reject) => {
       req.authenticated ? resolve() : reject()
@@ -17,11 +17,11 @@ mock('../../lib/auth/userDetailsHolder', (req, res) => {
   }
 })
 
-mock('../../app/idam/routeHelper', {
+mock('../../main/app/idam/routeHelper', {
   isUnprotectedPath: (path) => path === '/unprotected'
 })
 
-const routeAuthorizer = require('../../app/idam/routeAuthorizer')
+const routeAuthorizer = require('../../main/app/idam/routeAuthorizer')
 
 describe('RouteAuthorizer', () => {
   var req, res, next

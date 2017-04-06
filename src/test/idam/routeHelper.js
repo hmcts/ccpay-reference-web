@@ -3,7 +3,7 @@
 
 const expect = require('chai').expect
 
-const isUnprotectedPath = require('../../app/idam/routeHelper').isUnprotectedPath
+const isUnprotectedPath = require('../../main/app/idam/routeHelper').isUnprotectedPath
 
 describe('Checking that path is unprotected', () => {
   it('should return true for index page', (done) => {
