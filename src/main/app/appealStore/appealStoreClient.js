@@ -7,6 +7,7 @@ class AppealAccessForbiddenError extends Error {
   constructor () {
     super('Access to appeal forbidden')
     this.name = 'AppealAccessForbiddenError'
+    this.statusCode = 403
   }
 }
 
