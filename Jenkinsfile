@@ -3,40 +3,43 @@
 @Library('Reform') _
 
 properties(
-  [[$class: 'GithubProjectProperty', projectUrlStr: 'http://git.reform/common-components/reference-web'],
+  [[$class: 'GithubProjectProperty', projectUrlStr: 'https://git.reform.hmcts.net/common-components/reference-web'],
    pipelineTriggers([[$class: 'GitHubPushTrigger']])]
 )
 
-node {
-  try {
-    stage('Checkout') {
-      deleteDir()
-      checkout scm
-    }
+stageWithNotification('Checkout') {
+  deleteDir()
+  checkout scm
+}
 
-    stage('Setup') {
-      sh '''
+stageWithNotification('Setup') {
+  sh '''
         yarn install
         yarn setup
       '''
-    }
+}
 
-    stage('Lint') {
-      sh "yarn run lint"
-    }
+stageWithNotification('Lint') {
+  sh "yarn run lint"
+}
 
-    stage('Test') {
-      sh "yarn test"
-    }
+stageWithNotification('Test') {
+  sh "yarn test"
+}
 
-    stage('Package application (Docker)') {
-      dockerImage imageName: 'common-components/reference-web'
+stageWithNotification('Package application (Docker)') {
+  dockerImage imageName: 'common-components/reference-web'
+}
+
+private stageWithNotification(String name, Closure body) {
+  stage(name) {
+    node {
+      try {
+        body()
+      } catch (err) {
+        notifyBuildFailure channel: '#cc_tech'
+        throw err
+      }
     }
-  } catch (err) {
-    slackSend(
-      channel: '#cc_tech',
-      color: 'danger',
-      message: "${env.JOB_NAME}: <${env.BUILD_URL}console|Build ${env.BUILD_DISPLAY_NAME}> has FAILED")
-    throw err
   }
 }
