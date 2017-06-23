@@ -1,45 +1,60 @@
 #!groovy
 
-@Library('Reform') _
+@Library("Reform")
+import uk.gov.hmcts.Packager
+
+def packager = new Packager(this, 'cc')
 
 properties(
   [[$class: 'GithubProjectProperty', projectUrlStr: 'https://git.reform.hmcts.net/common-components/reference-web'],
    pipelineTriggers([[$class: 'GitHubPushTrigger']])]
 )
 
-stageWithNotification('Checkout') {
-  deleteDir()
-  checkout scm
-}
-
-stageWithNotification('Setup') {
-  sh '''
-        yarn install
-        yarn setup
-      '''
-}
-
-stageWithNotification('Lint') {
-  sh "yarn run lint"
-}
-
-stageWithNotification('Test') {
-  sh "yarn test"
-}
-
-stageWithNotification('Package application (Docker)') {
-  dockerImage imageName: 'common-components/reference-web'
-}
-
-private stageWithNotification(String name, Closure body) {
-  stage(name) {
-    node {
-      try {
-        body()
-      } catch (err) {
-        notifyBuildFailure channel: '#cc_tech'
-        throw err
+milestone()
+lock(resource: "reference-web-${env.BRANCH_NAME}", inversePrecedence: true) {
+  node {
+    try {
+      stage('Checkout') {
+        deleteDir()
+        checkout scm
       }
+
+      stage('Setup') {
+        sh '''
+          yarn install
+          yarn setup
+        '''
+      }
+
+      stage('Lint') {
+        sh "yarn run lint"
+      }
+
+      stage('Test') {
+        sh "yarn test"
+      }
+
+      ifMaster {
+        def rpmVersion
+
+        stage("Package RPM") {
+          rpmVersion = packager.nodeRPM('reference-web')
+        }
+
+        stage("Publish RPM") {
+          packager.publishNodeRPM('reference-web')
+        }
+
+        stage("Trigger acceptance tests") {
+//                    build job: '/common-components/reference-web-acceptance-tests/master', parameters: [[$class: 'StringParameterValue', name: 'rpmVersion', value: rpmVersion]]
+        }
+      }
+
+      milestone()
+    } catch (err) {
+      notifyBuildFailure channel: '#cc_tech'
+      throw err
     }
   }
 }
+
