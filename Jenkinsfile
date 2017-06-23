@@ -58,3 +58,8 @@ lock(resource: "reference-web-${env.BRANCH_NAME}", inversePrecedence: true) {
   }
 }
 
+private ifMaster(Closure body) {
+  if ("master" == "${env.BRANCH_NAME}") {
+    body()
+  }
+}
